@@ -1,5 +1,7 @@
 {
-    "address":"0xdfec61213985D7169e90f5e26E98207d37c8418b",
+   "_comment":"This file is manually created after deploying contract to Etherscan via Infura - data copied from console.log()",
+
+   "address":"0xdfec61213985D7169e90f5e26E98207d37c8418b",
     "abi":[
        {
           "type":"function",

@@ -1,3 +1,4 @@
+require('dotenv').config({ path: __dirname + '/.env.local' });
 require("@nomiclabs/hardhat-waffle");
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -12,8 +13,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
-const INFURA_URL = 'https://rinkeby.infura.io/v3/f826a5806c9c424d982e0511e7171f50';
-const PRIVATE_KEY = 'ba36f7ba42feab2eefb64702d1cbb5094bc6d895c0466db9976e14d221513595';
+const INFURA_URL = INFURA_URL;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;//Even if you saw it in the previous commit, this wallet is used only for testnet demo apps :)
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
