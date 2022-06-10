@@ -14,6 +14,7 @@ export default (props) => {
                     //factoryWithSigner.createCampaign('100');
                     const deployedCampaigns = await factoryWithSigner.getDeployedCampaigns();
                     setCampaigns(deployedCampaigns);
+                    //console.log(props.infuraURL);
                 }
             }
         }
@@ -48,7 +49,7 @@ export async function getStaticProps() {
     return {
         props: {
             campaigns,
-            infuraURL: process.env.INFURA_URL
+            //infuraURL: process.env.INFURA_URL
         },
         revalidate: 10//Fetches data from server every 10 seconds
     };
