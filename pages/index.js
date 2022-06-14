@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
+import { useRouter } from 'next/router';
 import { getFactorySigner } from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
 
 export default (props) => {
+    const router = useRouter();
     const [campaigns, setCampaigns] = useState(props.campaigns);
 
     useEffect(() => {
@@ -27,6 +28,12 @@ export default (props) => {
             fluid: true
         };
     });
+
+    function submitHandler(event) {
+        event.preventDefault();
+        router.push('/campaigns/new');
+       
+    }
     return (
         <Fragment>
             <h3>Open Campaigns</h3>
@@ -35,6 +42,7 @@ export default (props) => {
                 content="Create Campaign"
                 icon="add circle"
                 primary
+                onClick={submitHandler}
             />
             <Card.Group items={items} />
         </Fragment>
