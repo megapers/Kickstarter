@@ -8,7 +8,8 @@ export const getSigner = async () => {
         return provider.getSigner();
     }
     catch (error) {
-        console.log("Error: ", error.message);
+        console.log("Error connecting to Metamask: ", error.message);
+        console.log("Connecting to Infura provider...");
         try {
             const provider = new ethers.providers.JsonRpcProvider(process.env.INFURA_URL);
             const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);

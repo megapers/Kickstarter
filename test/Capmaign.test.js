@@ -26,8 +26,8 @@ beforeEach(async () => {
 describe('Campaigns', () => {
 
   it('Deploys a factory and a campaign', () => {
-    expect(factory.address, 'Factory is deploye').to.be.ok;
-    expect(campaign.address, 'Campaign is deploye').to.be.ok;
+    expect(factory.address, 'Factory is deployed').to.be.ok;
+    expect(campaign.address, 'Campaign is deployed').to.be.ok;
   });
 
   it('Marks caller as the campaign manager', async () => {
@@ -46,7 +46,7 @@ describe('Campaigns', () => {
       .to.be.revertedWith('Not enough tokens');
   });
 
-  it('Allows a manager to make a payment requesgt', async () => {
+  it('Allows a manager to make a payment request', async () => {
     await campaign
       .createRequest('Buy batteries', '100', addr1.address, { gasPrice: 200000000 });
     const request = await campaign.requests(0);

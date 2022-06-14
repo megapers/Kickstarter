@@ -11,7 +11,6 @@ export default (props) => {
             if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
                 const factoryWithSigner = await getFactorySigner();
                 if (factoryWithSigner) {
-                    //factoryWithSigner.createCampaign('100');
                     const deployedCampaigns = await factoryWithSigner.getDeployedCampaigns();
                     setCampaigns(deployedCampaigns);
                     //console.log(props.infuraURL);
@@ -44,7 +43,6 @@ export default (props) => {
 
 export async function getStaticProps() {
     const factoryWithSigner = await getFactorySigner();
-    //factoryWithSigner.createCampaign('100');
     const campaigns = await factoryWithSigner.getDeployedCampaigns();
     return {
         props: {
