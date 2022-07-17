@@ -8,12 +8,38 @@ async function main() {
   const Factory = await ethers.getContractFactory("CampaignFactory");
   const factory = await Factory.deploy();
 
-  const data = {
-    address: factory.address,
-    abi: JSON.parse(factory.interface.format('json'))
-  };
-  const dataJson = JSON.stringify(data);
-  console.log('Data: ', dataJson);
+  await factory.deployed();
+  console.log("Contract deployed to:", factory.address);
+
+  // const data = {
+  //   address: factory.address,
+  //   abi: JSON.parse(factory.interface.format('json'))
+  // };
+  // const dataJson = JSON.stringify(data);
+  // console.log('Data: ', dataJson);
+
+  saveFrontendFiles(factory);
+}
+
+function saveFrontendFiles(contract) {
+  const fs = require("fs");
+  const contractsDir = __dirname + "/../ethereum/abis";
+
+  if (!fs.existsSync(contractsDir)) {
+    fs.mkdirSync(contractsDir);
+  }
+
+  fs.writeFileSync(
+    contractsDir + "/contract-address.json",
+    JSON.stringify({ KICKSTARTER: contract.address }, undefined, 2)
+  );
+
+  const CampaignFactory = hre.artifacts.readArtifactSync("CampaignFactory");
+
+  fs.writeFileSync(
+    contractsDir + "/CampaignFactory.json",
+    JSON.stringify(CampaignFactory, null, 2)
+  );
 }
 
 main()

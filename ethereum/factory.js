@@ -1,12 +1,13 @@
-import { getSigner, getMetamaskSigner, getInfuraSigner} from './walletProvider';
-import ContractData from '../ContractData.json';
+import { getSigner} from './walletProvider';
 import { ethers } from 'ethers'
+import ContractAddress from './abis/contract-address.json';
+import CampaignFactory from './abis/CampaignFactory.json';
 
 export const getFactorySigner = async () => {
     const signer = await getSigner();
 
     try {
-        const contractWithSigner = new ethers.Contract(ContractData.address, ContractData.abi, signer);
+        const contractWithSigner = new ethers.Contract(ContractAddress.KICKSTARTER, CampaignFactory.abi, signer);
         return contractWithSigner;
     }
     catch (error) {

@@ -1,25 +1,27 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, useContext, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { getFactorySigner } from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
+import BlockchainContext from '../store/blockchain-context';
 
-export default (props) => {
+export default () => {
     const router = useRouter();
-    const [campaigns, setCampaigns] = useState(props.campaigns);
+    const [campaigns, setCampaigns] = useState([]);
+    const blockchainContext = useContext(BlockchainContext);
+    const provider = blockchainContext.provider;
 
     useEffect(() => {
         async function fetchData() {
             if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
-                const factoryWithSigner = await getFactorySigner();
+                const factoryWithSigner = provider;
                 if (factoryWithSigner) {
                     const deployedCampaigns = await factoryWithSigner.getDeployedCampaigns();
                     setCampaigns(deployedCampaigns);
-                    //console.log(props.infuraURL);
                 }
             }
         }
         fetchData();
-    }, []);
+    }, [provider]);
 
     const items = campaigns.map(address => {
         return {
@@ -32,31 +34,26 @@ export default (props) => {
     function submitHandler(event) {
         event.preventDefault();
         router.push('/campaigns/new');
-       
+
     }
     return (
-        <Fragment>
-            <h3>Open Campaigns</h3>
-            <Button
-                floated="right"
-                content="Create Campaign"
-                icon="add circle"
-                primary
-                onClick={submitHandler}
-            />
-            <Card.Group items={items} />
-        </Fragment>
+        <div>
+            {
+                blockchainContext.isLoaded ?
+                    <Fragment>
+                        <h3>Open Campaigns</h3>
+                        <Button
+                            floated="right"
+                            content="Create Campaign"
+                            icon="add circle"
+                            primary
+                            onClick={submitHandler}
+                        />
+                        <Card.Group items={items} />
+                    </Fragment>
+                    : <p>Loading...</p>
+            }
+        </div>
     );
 };
 
-export async function getStaticProps() {
-    const factoryWithSigner = await getFactorySigner();
-    const campaigns = await factoryWithSigner.getDeployedCampaigns();
-    return {
-        props: {
-            campaigns,
-            //infuraURL: process.env.INFURA_URL
-        },
-        revalidate: 10//Fetches data from server every 10 seconds
-    };
-}

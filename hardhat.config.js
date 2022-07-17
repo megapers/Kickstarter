@@ -13,9 +13,8 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
-const INFURA_URL = INFURA_URL;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;//Even if you saw it in the previous commit, this wallet is used only for testnet demo apps :)
-
+const INFURA_URL = process.env.INFURA_URL;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
