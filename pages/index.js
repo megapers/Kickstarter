@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { getFactorySigner } from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
 import BlockchainContext from '../store/blockchain-context';
+import Link from 'next/link';
 
 export default () => {
     const router = useRouter();
@@ -21,12 +22,16 @@ export default () => {
             }
         }
         fetchData();
-    }, [provider]);
+    }, [provider, campaigns]);
 
     const items = campaigns.map(address => {
         return {
             header: address,
-            description: <a>View Campaign</a>,
+            description: (
+                <Link href={`/campaigns/${address}`}>
+                    <a>View Campaign</a>
+                </Link>
+            ),
             fluid: true
         };
     });
@@ -42,13 +47,19 @@ export default () => {
                 blockchainContext.isLoaded ?
                     <Fragment>
                         <h3>Open Campaigns</h3>
-                        <Button
-                            floated="right"
-                            content="Create Campaign"
-                            icon="add circle"
-                            primary
-                            onClick={submitHandler}
-                        />
+
+                        <Link href='/campaigns/new'>
+                            <a>
+                                <Button
+                                    floated="right"
+                                    content="Create Campaign"
+                                    icon="add circle"
+                                    primary
+                                    onClick={submitHandler}
+                                />
+                            </a>
+                        </Link>
+
                         <Card.Group items={items} />
                     </Fragment>
                     : <p>Loading...</p>

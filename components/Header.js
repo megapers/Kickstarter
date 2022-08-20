@@ -5,7 +5,7 @@ export default () => {
     return (
         <Menu style={{ marginTop: '10px' }}>
             <Menu.Item>
-                CrowdCoin
+            <Link href='/'>CrowdCoin</Link>
             </Menu.Item>
 
             <Menu.Menu position='right'>

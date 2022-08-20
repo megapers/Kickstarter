@@ -1,20 +1,22 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { Input, Button, Form, Message } from 'semantic-ui-react'
-import { getFactorySigner } from "../../../ethereum/factory";
+import BlockchainContext from '../../../store/blockchain-context';
 
 const CampaignNew = () => {
     const router = useRouter();
     const [amountInput, setAmountInput] = useState();
     const [errorMessage, setErrorMessage] = useState();
     const [loading, setLoading] = useState(false);
+    const blockchainContext = useContext(BlockchainContext);
+    const provider = blockchainContext.provider;
 
     async function submitHandler(event) {
         event.preventDefault();
         setLoading(true);
         setErrorMessage('');
         try {
-            const factoryWithSigner = await getFactorySigner();
+            const factoryWithSigner = provider;
             await factoryWithSigner.createCampaign(amountInput);
         }
         catch (err) {
