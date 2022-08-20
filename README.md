@@ -16,11 +16,11 @@
 
 ### Front end
 
-- NextJS
+- NextJS, Semantic UI for CSS
 
 ### Deployed
 
-[-Vercel:]()
+[-Vercel:](https://kickstarter-five.vercel.app/)
 
 ## Deployment: run locally
 
@@ -58,7 +58,7 @@ npx hardhat run --network localhost scripts/deploy.js
 
 ## Access deployed application
 
-### 1. Folow the link to open the app: [-Kickstarter]()
+### 1. Folow the link to open the app: [-Kickstarter](https://kickstarter-five.vercel.app/)
 
 ### 2. Connect your wallet
 
