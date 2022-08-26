@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router'
 import { Card, Grid } from 'semantic-ui-react';
+import { ethers } from 'ethers'
 import BlockchainContext from '../../store/blockchain-context';
 import { getContractByAddress } from '../../ethereum/factory';
 import ContributeForm from '../../components/ContributeForm';
@@ -20,7 +21,7 @@ const CampaignShow = () => {
 
                 setSummary({
                     minimumContribution: (contractSummary[0]).toNumber(),
-                    balance: (contractSummary[1]).toNumber(),
+                    balance: ethers.utils.formatEther((contractSummary[1]).toString()),
                     requestCount: (contractSummary[2]).toNumber(),
                     approversCount: (contractSummary[3]).toNumber(),
                     manager: (contractSummary[4])
@@ -30,7 +31,7 @@ const CampaignShow = () => {
             }
 
         })()
-    }, [provider]);
+    }, [provider, summary]);
 
     const items = [
         {
@@ -71,7 +72,7 @@ const CampaignShow = () => {
                 </Grid.Column>
 
                 <Grid.Column width={6}>
-                    <ContributeForm />
+                    <ContributeForm contractAddress={address} />
                 </Grid.Column>
             </Grid>
         </div>
