@@ -1,16 +1,12 @@
-import { useState, useEffect, useContext, Fragment } from 'react';
+import { useState } from 'react';
 import { ethers } from 'ethers'
-
 import { Input, Button, Form, Message } from 'semantic-ui-react';
-import BlockchainContext from '../store/blockchain-context';
 import { getContractByAddress } from '../ethereum/factory';
 
 const ContributeForm = (props) => {
     const [amountInput, setAmountInput] = useState(0);
     const [errorMessage, setErrorMessage] = useState();
     const [loading, setLoading] = useState(false);
-    const blockchainContext = useContext(BlockchainContext);
-    const provider = blockchainContext.provider;
 
     async function submitHandler(event) {
         event.preventDefault();
@@ -30,7 +26,7 @@ const ContributeForm = (props) => {
     }
 
     return (
-        <Form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler} error={!!errorMessage}>
             <Form.Field>
                 <label>Amount to Contribute</label>
                 <Input
@@ -40,8 +36,10 @@ const ContributeForm = (props) => {
                     onChange={event => setAmountInput(event.target.value)}
                 />
             </Form.Field>
+            <Message error header="Oops!" content={errorMessage} />
             <Button
                 primary
+                loading={loading}
             >
                 Contribute!
             </Button>

@@ -21,10 +21,13 @@ export const getContractByAddress = async (address) => {
     const signer = await getSigner();
 
     try {
-
-        let abi = [
+        const Request = "(string description, uint256 value, address payable recipient, bool complete, uint256 approvalCount)";
+        const abi = [
             "function getSummary() public view returns (uint, uint, uint, uint, address)",
-            "function contribute() public payable"
+            "function contribute() public payable",
+            "function createRequest(string, uint256, address)",
+            `function getAllRequests() public view returns (${Request}[] memory)`,
+            "function getRequestsCount() public view returns (uint)"
         ]
 
         const contractWithSigner = new ethers.Contract(address, abi, signer);
