@@ -99,25 +99,6 @@ contract Campaign {
         return requests.length;
     }
 
-    // function getAllRequests() public view returns (string[] memory, uint256[] memory, address[] memory, bool[] memory, uint256[] memory){
-    //     string[] memory description = new string[](requests.length);
-    //     uint256[] memory value = new uint[](requests.length);
-    //     address[] memory recipient = new address[](requests.length);
-    //     bool[] memory complete = new bool[](requests.length);
-    //     uint256[] memory approvalCount = new uint256[](requests.length);
-
-    //     for (uint i = 0; i < requests.length; i++){
-    //         Request storage request = requests[i];
-    //         description[i] = request.description;
-    //         value[i] = request.value;
-    //         recipient[i] = request.recipient;
-    //         complete[i] = request.complete;
-    //         approvalCount[i] = request.approvalCount;
-    //     }
-
-    //     return(description, value, recipient, complete, approvalCount);
-    // }
-
      function getAllRequests() public view returns (Request[] memory){
         return requests;
     }

@@ -2,6 +2,7 @@ import { getSigner } from './walletProvider';
 import { ethers } from 'ethers'
 import ContractAddress from './abis/contract-address.json';
 import CampaignFactory from './abis/CampaignFactory.json';
+import Campaign from './abis/Campaign.json';
 
 export const getFactorySigner = async () => {
     const signer = await getSigner();
@@ -21,16 +22,7 @@ export const getContractByAddress = async (address) => {
     const signer = await getSigner();
 
     try {
-        const Request = "(string description, uint256 value, address payable recipient, bool complete, uint256 approvalCount)";
-        const abi = [
-            "function getSummary() public view returns (uint, uint, uint, uint, address)",
-            "function contribute() public payable",
-            "function createRequest(string, uint256, address)",
-            `function getAllRequests() public view returns (${Request}[] memory)`,
-            "function getRequestsCount() public view returns (uint)"
-        ]
-
-        const contractWithSigner = new ethers.Contract(address, abi, signer);
+        const contractWithSigner = new ethers.Contract(address, Campaign.abi, signer);
         return contractWithSigner;
     }
     catch (error) {

@@ -62,4 +62,4 @@ npx hardhat run --network localhost scripts/deploy.js
 
 ### 2. Connect your wallet
 
-### 3. Select Rinkeby network
+### 3. Select Goerli network

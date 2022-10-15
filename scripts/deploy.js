@@ -40,6 +40,13 @@ function saveFrontendFiles(contract) {
     contractsDir + "/CampaignFactory.json",
     JSON.stringify(CampaignFactory, null, 2)
   );
+
+  const Campaign = hre.artifacts.readArtifactSync("Campaign");
+
+  fs.writeFileSync(
+    contractsDir + "/Campaign.json",
+    JSON.stringify(Campaign, null, 2)
+  );
 }
 
 main()
