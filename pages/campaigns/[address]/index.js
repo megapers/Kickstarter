@@ -32,7 +32,7 @@ const CampaignShow = () => {
             }
 
         })()
-    }, [address]);
+    }, [address, summary]);
 
     const items = [
         {

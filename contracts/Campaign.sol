@@ -1,106 +1,104 @@
-//SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
-
-import "hardhat/console.sol";
-
+// SPDX-License-Identifier: MIT
+ 
+pragma solidity ^0.8.9;
+ 
 contract CampaignFactory {
-    address[] public deployedCampaigns;
-
-    function createCampaign(uint256 minimum) public {
-        Campaign newCampaign = new Campaign(minimum, msg.sender);
-        deployedCampaigns.push(address(newCampaign));
+    address payable[] public deployedCampaigns;
+ 
+    function createCampaign(uint minimum) public {
+        address newCampaign = address(new Campaign(minimum, msg.sender));
+        deployedCampaigns.push(payable(newCampaign));
     }
-
-    function getDeployedCampaigns() public view returns (address[] memory) {
+ 
+    function getDeployedCampaigns() public view returns (address payable[] memory) {
         return deployedCampaigns;
     }
 }
-
+ 
 contract Campaign {
     struct Request {
         string description;
-        uint256 value;
-        address payable recipient;
+        uint value;
+        address recipient;
         bool complete;
-        uint256 approvalCount;
+        uint approvalCount;
     }
-
+ 
     Request[] public requests;
     address public manager;
-    uint256 public minimumContribution;
+    uint public minimumContribution;
     mapping(address => bool) public approvers;
-    uint256 public approversCount;
-    mapping(address => bool) public approvals; //Test
-
+    uint public approversCount;
+    mapping(address => bool) public approvals;
+ 
     modifier restricted() {
         require(msg.sender == manager);
         _;
     }
-
-    constructor(uint256 minimum, address creator) {
+ 
+    constructor (uint minimum, address creator) {
         manager = creator;
         minimumContribution = minimum;
     }
-
+ 
     function contribute() public payable {
-        require(msg.value > minimumContribution, "Not enough tokens");
-        approvers[payable(msg.sender)] = true;
-        approversCount++;
+        require(msg.value > minimumContribution);
+ 
+        if(!approvers[msg.sender])
+        {
+            approversCount++;
+        }
+
+        approvers[msg.sender] = true;
     }
-
-    function createRequest(
-        string memory _description,
-        uint256 _value,
-        address payable _recipient
-    ) public restricted {
-        Request memory newRequest = Request({
-            description: _description,
-            value: _value,
-            recipient: _recipient,
-            complete: false,
-            approvalCount: 0
-        });
-
-        requests.push(newRequest);
+ 
+    function createRequest(string memory description, uint value, address recipient) public restricted {
+        Request storage newRequest = requests.push(); 
+        newRequest.description = description;
+        newRequest.value= value;
+        newRequest.recipient= recipient;
+        newRequest.complete= false;
+        newRequest.approvalCount= 0;
     }
-
-    function approveRequest(uint256 index) public {
-        Request storage request = requests[index]; //Create alias
-
+ 
+    function approveRequest(uint index) public {
+        Request storage request = requests[index];
+ 
         require(approvers[msg.sender]);
-        require(!approvals[msg.sender]); //Test
-
-        approvals[msg.sender] = true; //Test
+        require(!approvals[msg.sender]);
+ 
+        approvals[msg.sender] = true;
         request.approvalCount++;
     }
-
-    function finalizeRequest(uint256 index) public restricted {
-        Request storage request = requests[index]; //Create alias
-
+ 
+    function finalizeRequest(uint index) public restricted {
+        Request storage request = requests[index];
+ 
         require(request.approvalCount > (approversCount / 2));
         require(!request.complete);
-        request.recipient.transfer(request.value);
+ 
+        payable(request.recipient).transfer(request.value);
         request.complete = true;
+        approvals[msg.sender] = false;
     }
-
+    
     function getSummary() public view returns (
-        uint, uint, uint, uint, address
-    ){
-        return(
-            minimumContribution,
-            address(this).balance,
-            requests.length,
-            approversCount,
-            manager
+      uint, uint, uint, uint, address
+      ) {
+        return (
+          minimumContribution,
+          address(this).balance,
+          requests.length,
+          approversCount,
+          manager
         );
     }
-
-    function getRequestsCount() public view returns (uint){
+    
+    function getRequestsCount() public view returns (uint) {
         return requests.length;
     }
 
-     function getAllRequests() public view returns (Request[] memory){
+    function getAllRequests() public view returns (Request[] memory){
         return requests;
     }
-
-}
+}   

@@ -10,6 +10,8 @@ const RequestIndex = () => {
     const [approversCount, setApproversCount] = useState(0);
     const [requests, setRequests] = useState([]);
     const [requestCount, setrequestCount] = useState([]);
+    const [approved, setApproved] = useState(false);
+    const [finalized, setFinalized] = useState(false);
 
     const router = useRouter();
     const { address } = router.query;
@@ -33,7 +35,7 @@ const RequestIndex = () => {
             }
 
         })()
-    }, [address]);
+    }, [address, requestCount, approved, finalized]);
 
     function renderRows() {
         return requests.map((request, index) => {
@@ -43,6 +45,8 @@ const RequestIndex = () => {
                 request={request}
                 address={address}
                 approversCount={approversCount}
+                approve={setApproved}
+                finalize={setFinalized}
             />
         });
     }

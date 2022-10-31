@@ -22,8 +22,9 @@ export const getContractByAddress = async (address) => {
     const signer = await getSigner();
 
     try {
-        const contractWithSigner = new ethers.Contract(address, Campaign.abi, signer);
-        return contractWithSigner;
+        const contracFactory = await new ethers.Contract(address, Campaign.abi, signer);
+        const existingContract = await contracFactory.attach(address);
+        return existingContract;
     }
     catch (error) {
         console.log('Contract is not found:\n', error);

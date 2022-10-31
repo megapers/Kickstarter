@@ -11,12 +11,14 @@ const RequestRow = (props) => {
         const contract = await getContractByAddress(address);
         const tx = await contract.approveRequest(id);
         await tx.wait();
+        props.approve();
     };
 
     const onFinalize = async () => {
         const contract = await getContractByAddress(address);
         const tx = await contract.finalizeRequest(id);
         await tx.wait();
+        props.finalize();
     };
 
     return (
