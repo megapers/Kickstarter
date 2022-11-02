@@ -4,6 +4,7 @@ import { getFactorySigner } from '../ethereum/factory';
 import { Card, Button } from 'semantic-ui-react';
 import BlockchainContext from '../store/blockchain-context';
 import Link from 'next/link';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default () => {
     const router = useRouter();
@@ -19,6 +20,7 @@ export default () => {
                     const deployedCampaigns = await factoryWithSigner.getDeployedCampaigns();
                     setCampaigns(deployedCampaigns);
                 }
+
             }
         }
         fetchData();
@@ -64,6 +66,18 @@ export default () => {
                     </Fragment>
                     : <p>Loading...</p>
             }
+
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100vh',
+                }}
+            >
+                <ConnectButton />
+
+            </div>
         </div>
     );
 };

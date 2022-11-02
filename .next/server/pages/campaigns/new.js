@@ -129,7 +129,7 @@ module.exports = JSON.parse('{"_format":"hh-sol-artifact-1","contractName":"Camp
   \*********************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"KICKSTARTER":"0x5FbDB2315678afecb367f032d93F642f64180aa3"}');
+module.exports = JSON.parse('{"KICKSTARTER":"0xEF6cF9a03c9B8eC471e2E53d8f7841CE54ba1671"}');
 
 /***/ })
 

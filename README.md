@@ -13,6 +13,7 @@
 ### Interface library
 
 - EthersJS
+- Rainbow/WAGMI
 
 ### Front end
 
@@ -35,7 +36,9 @@ npm install
 npm run dev
 ```
 
-### 3. Start a [local node](https://hardhat.org/getting-started/#connecting-a-wallet-or-dapp-to-hardhat-network)
+### 3. Connect your wallet to Goerli test network (contract id: 0xEF6cF9a03c9B8eC471e2E53d8f7841CE54ba1671)
+
+### 3a. Or start a [local node](https://hardhat.org/getting-started/#connecting-a-wallet-or-dapp-to-hardhat-network)
 
 Hardhat is a blockchain development toolkit used to compile your solidity files, run tests and run a local blockchain node.
 
@@ -44,17 +47,17 @@ Hardhat is a blockchain development toolkit used to compile your solidity files,
 	npx hardhat node
 ```
 
-### 4. Open a new terminal and deploy the smart contract in the `localhost` network
+### 3b. Open a new terminal and deploy the smart contract in the `localhost` network
 
 ```
 npx hardhat run --network localhost scripts/deploy.js
 ```
 
-### 5. Follow the instructions to link hardhat to metamask
+### 3c. Follow the instructions to link hardhat to metamask
 
 [Connecting hardhat to metamask](https://support.chainstack.com/hc/en-us/articles/4408642503449-Using-MetaMask-with-a-Hardhat-node)
 
-### 6. Reset Metamask Account in Advanced Settings
+### 3d. Reset Metamask Account in Advanced Settings
 
 ## Access deployed application
 
